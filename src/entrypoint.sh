@@ -147,6 +147,8 @@ service clamav-freshclam start
 # Start Amavis
 service amavis start
 
+chmod 777 /var/virusmails
+
 # Tail the syslog
 trap _sigterm SIGTERM
 tail -f /var/log/syslog &
@@ -160,8 +162,8 @@ do
 	if [ "$COUNTDOWN" -le 0 ]
 	then
 		echo "Updating SpamAssassin rules..."
-		sa-update --nogpg --channelfile /usr/local/amavis/update-channels
-		service amavis restart
+		# sa-update --nogpg --channelfile /usr/local/amavis/update-channels
+		# service amavis restart
 		echo "SpamAssassin rules updated."
 		COUNTDOWN=$INTERVAL
 	fi

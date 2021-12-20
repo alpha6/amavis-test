@@ -15,5 +15,14 @@ $allowed_added_header_fields{lc('X-Spam-Status')} = 1;
 $allowed_added_header_fields{lc('X-Spam-Report')} = 1;
 @local_domains_maps = ['.'];
 
+$clean_quarantine_to      = undef;      # local quarantine
+$virus_quarantine_to      = undef;      # traditional local quarantine
+$banned_quarantine_to     = undef;      # local quarantine
+$bad_header_quarantine_to = undef;      # local quarantine
+$spam_quarantine_to       = undef;      # local quarantine
+# $forward_method           = undef;
+
+include_config_files('/etc/amavis/amavisd-custom.conf');
+
 #------------ Do not modify anything below this line -------------
 1;  # ensure a defined return

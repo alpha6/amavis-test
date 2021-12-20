@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  amavis:
+    image: technicalguru/mailserver-amavis:latest
+    command: /usr/local/amavis/entrypoint.sh
+    ports:
+      - "10024:10024"
+    environment: 
+      - "AV_POSTFIX_SERVICE_PORT=10025"
+      - "AV_POSTFIX_SERVICE_NAME=postfix"
+      - "AV_MYDOMAIN=pupkin.ru"
+
+  test-db:
+    image: mariadb:latest
+    volumes:
+        - ../mysql_data:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_HOST=%"
+      - "MYSQL_ROOT_PASSWORD=QAZwsx123%"
+      - "MYSQL_DATABASE=postfix"
+      - "MARIADB_USER=postfix"
+      - "MARIADB_PASSWORD=QAZwsx123%"
+
+  postfix:
+    image: technicalguru/mailserver-postfix:latest
+    ports:
+      - "10025:25"
+    depends_on:
+      - test-db
+      - amavis
+    environment: 
+      - "PF_MYDOMAIN=pupkin.ru"
+      - "PF_MYHOSTNAME=pupkin.ru"
+      - "PF_AMAVIS_SERVICE_NAME=amavis"
+      - "PF_AMAVIS_SERVICE_PORT=10024"
+      - "PF_SETUP_PASS=QAZwsx123%"
+      - "PF_DB_USER=postfix"
+      - "PF_DB_PASS=QAZwsx123%"
+      - "PF_DB_HOST=test-db"
+      - "PF_DB_NAME=postfix"
+    

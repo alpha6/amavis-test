@@ -10,8 +10,8 @@ use strict;
 # If You wish to enable it, please uncomment the following lines:
 
 
-@bypass_virus_checks_maps = (
-   \%bypass_virus_checks, \@bypass_virus_checks_acl, \$bypass_virus_checks_re);
+#@bypass_virus_checks_maps = (
+#   \%bypass_virus_checks, \@bypass_virus_checks_acl, \$bypass_virus_checks_re);
 
 
 #
@@ -21,7 +21,11 @@ use strict;
 # If You wish to enable it, please uncomment the following lines:
 
 
-@bypass_spam_checks_maps = (
-   \%bypass_spam_checks, \@bypass_spam_checks_acl, \$bypass_spam_checks_re);
+#@bypass_spam_checks_maps = (
+#   \%bypass_spam_checks, \@bypass_spam_checks_acl, \$bypass_spam_checks_re);
+
+@bypass_virus_checks_maps = (1);  # controls running of anti-virus code
+@bypass_spam_checks_maps  = (1);  # controls running of anti-spam code
+
 
 1;  # ensure a defined return

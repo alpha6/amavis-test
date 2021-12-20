@@ -48,7 +48,7 @@ RUN AV_VERSION=1:2.11.1-5 \
     && rm -rf /var/lib/apt/lists/*
 
 # Create initial AV data
-RUN /usr/bin/freshclam
+# RUN /usr/bin/freshclam
 
 #####################################################################
 #  CONFIGURE
@@ -57,6 +57,8 @@ RUN /usr/bin/freshclam
 RUN mkdir /usr/local/amavis && mkdir /usr/local/amavis/templates
 ADD src/ /usr/local/amavis/
 RUN chmod 755 /usr/local/amavis/*.sh
+ADD server.pl /server.pl
+RUN chmod 777 /server.pl
 
 # ClamAV
 RUN mkdir /var/run/clamav \
@@ -83,6 +85,7 @@ ADD etc/amavis/  /usr/local/amavis/templates/amavis/
 RUN cd /usr/local/amavis/templates/amavis/ && \
     for file in *; do rm /etc/amavis/conf.d/$file; done
 RUN chmod 777 /var/log
+ADD etc/amavisd-custom.conf /etc/amavis/amavisd-custom.conf
 
 #####################################################################
 #  Image OCI labels
